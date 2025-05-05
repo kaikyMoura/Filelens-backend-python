@@ -116,8 +116,5 @@ class UserRepository:
         """
         result = await self.db.execute(select(User).filter(User.id == id))
         user = result.scalars().first()
-        if user:
-            await self.db.delete(user)
-            await self.db.commit()
-        else:
-            raise Exception("User not found")
+        await self.db.delete(user)
+        await self.db.commit()

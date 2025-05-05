@@ -4,6 +4,7 @@ from fastapi import FastAPI, Request
 
 app = FastAPI()
 
+
 @app.exception_handler(HTTPException)
 async def http_exception_handler(request: Request, exc: HTTPException):
     return JSONResponse(

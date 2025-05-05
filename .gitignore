@@ -1,0 +1,39 @@
+# Python
+*.pyc
+*.pyo
+__pycache__/
+*.pyd
+.Python
+
+# Virtual Environment
+venv/
+env/
+ENV/
+*.env
+.venv/
+
+# Pytest
+.cache/
+
+# IDEs
+.vscode/
+.idea/
+
+# FastAPI
+*.sqlite
+
+# Log files
+*.log
+
+# Migrations
+alembic.ini
+migrations/
+
+# Cache
+pip-wheel-metadata/
+
+.vscode/
+
+.idea/
+
+*.iml

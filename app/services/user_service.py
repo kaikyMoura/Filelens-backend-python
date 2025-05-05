@@ -19,43 +19,43 @@ class UserService:
 
     async def get_user_by_email(self, email: str):
         if not email:
-            raise HTTPException("Missing required properties", 400)
+            raise HTTPException(status_code=400, detail="Missing required properties")
 
         if not re.match(r"^[^\s@]+@[^\s@]+\.[^\s@]+$", email):
-            raise HTTPException("Email format is invalid", 400)
+            raise HTTPException(status_code=400, detail="Email format is invalid")
 
         user = await self.user_repository.find_by_email(email)
         if not user:
-            raise HTTPException("User not found", 404)
+            raise HTTPException(status_code=404, detail="User not found")
 
         return user
 
     async def get_user_by_id(self, id: str):
         if not id:
-            raise HTTPException("Missing required properties", 400)
+            raise HTTPException(status_code=400, detail="Missing required properties")
 
         user = await self.user_repository.find_by_id(id)
         if not user:
-            raise HTTPException("User not found", 404)
+            raise HTTPException(status_code=404, detail="User not found")
 
         return user
 
     async def do_user_login(self, email: str, password: str) -> str:
         if not email:
-            raise HTTPException("Missing required properties", 400)
+            raise HTTPException(status_code=400, detail="Missing required properties")
 
         if not re.match(r"^[^\s@]+@[^\s@]+\.[^\s@]+$", email):
-            raise HTTPException("Email format is invalid", 400)
+            raise HTTPException(status_code=400, detail="Missing required properties")
 
         if not password:
-            raise HTTPException("Missing required properties", 400)
+            raise HTTPException(status_code=400, detail="Missing required properties")
 
         user = await self.user_repository.find_by_email(email)
         if not user:
-            raise HTTPException("User not found", 404)
+            raise HTTPException(status_code=404, detail="User not found")
 
         if user.password != password:
-            raise HTTPException("Invalid credentials", 401)
+            raise HTTPException(status_code=401, detail="Invalid credentials")
 
         token = await create_access_token({"sub": user.email})
 
@@ -95,18 +95,18 @@ class UserService:
 
     async def delete_user(self, id: str):
         if not id:
-            raise HTTPException("Missing required properties", 400)
+            raise HTTPException(status_code=400, detail="Missing required properties")
 
         if not await self.user_repository.exists_by_id(id):
-            raise HTTPException("User not found", 404)
+            raise HTTPException(status_code=404, detail="User not found")
 
         return await self.user_repository.delete_by_id(id)
 
     async def update_user(self, user: UserCreate):
         if not user.id:
-            raise HTTPException("Missing required properties", 400)
+            raise HTTPException(status_code=400, detail="Missing required properties")
 
         if not await self.user_repository.exists_by_id(user.id):
-            raise HTTPException("User not found", 404)
+            raise HTTPException(status_code=404, detail="User not found")
 
         return await self.user_repository.save(user)
